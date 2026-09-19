@@ -70,3 +70,13 @@ with a basePath for Pages; without it you get the normal Vercel build.
 - No server-side routes. Fine here (everything is static or `force-static`); a
   future project with real API routes needs a different preview host.
 - URLs carry the `/kuki-curacao/` prefix unless a custom domain is attached.
+
+### One safety rule for the preview repo
+The preview repo is **public**, so a push to it is a publish. `scripts/preview.sh`
+refuses to run outside the site directory and refuses to push unless the build
+produced `out/index.html` — that guard exists because a mistyped `cd` once
+git-inited the wrong folder and pushed 1.6 GB of personal files here. A
+force-push does not remove anything from GitHub; unreferenced commits stay
+fetchable by SHA. If something private ever lands in this repo: revoke whatever
+credentials were in it, then delete the repository and recreate it (the source
+lives in `~/code/site`, so it costs about two minutes).
