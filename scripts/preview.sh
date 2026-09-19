@@ -3,13 +3,25 @@
 # No CI build on the other side: what lands in gh-pages is already built,
 # so "push" to "live" is ~30 seconds.
 set -euo pipefail
+
 REPO="${PREVIEW_REPO:?set PREVIEW_REPO, e.g. scottprins32-hub/kuki-curacao}"
 BASE="/${REPO#*/}"
 
+# Guard: never run (and never git-init) anywhere but the site directory.
+# A mistyped cd once turned ~/Downloads into a git repo and pushed 1.6 GB
+# of personal files to a public repo. Two cheap checks stop that forever.
+[ -f next.config.ts ] && [ -d app ] || {
+  echo "refusing: $(pwd) is not the site directory (no next.config.ts + app/)" >&2
+  exit 1
+}
+
+rm -rf out
 PREVIEW=1 PREVIEW_BASE="$BASE" npx next build
+[ -f out/index.html ] || { echo "refusing: build produced no out/index.html" >&2; exit 1; }
 touch out/.nojekyll   # without this, GitHub Pages hides _next/
 
 cd out
+[ -f index.html ] || { echo "refusing: wrong directory" >&2; exit 1; }
 git init -q
 git checkout -qb gh-pages
 git add -A

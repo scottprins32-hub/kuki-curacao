@@ -10,8 +10,13 @@ import type { NextConfig } from "next";
 const preview = process.env.PREVIEW === "1";
 const repo = process.env.PREVIEW_BASE ?? "/kuki-curacao";
 
+// Pin the tracing root to this folder. Without it, a stray package-lock.json
+// higher up (e.g. in the home directory) makes Next guess the wrong workspace.
+const outputFileTracingRoot = __dirname;
+
 const nextConfig: NextConfig = preview
   ? {
+      outputFileTracingRoot,
       output: "export",
       basePath: repo,
       assetPrefix: repo,
@@ -19,6 +24,7 @@ const nextConfig: NextConfig = preview
       images: { unoptimized: true },
     }
   : {
+      outputFileTracingRoot,
       images: {
         formats: ["image/avif", "image/webp"],
         remotePatterns: [{ protocol: "https", hostname: "d2ol7oe51mr4n9.cloudfront.net" }],
