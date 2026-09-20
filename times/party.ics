@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Kuki Curacao//Coffee Party//EN
+BEGIN:VEVENT
+UID:coffee-party-20261003T150000Z@kuki-curacao
+DTSTAMP:20260920T231012Z
+DTSTART:20261003T150000Z
+DTEND:20261003T180000Z
+SUMMARY:Kuki Coffee Party (date to be confirmed)
+DESCRIPTION:Next drop. Kuki hangout, coffee & music. New drop at Kuki. https://www.instagram.com/kuki.curacao/
+LOCATION:Kuki, Mambo Beach Boulevard, Willemstad, Curaçao
+END:VEVENT
+END:VCALENDAR
